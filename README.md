@@ -6,7 +6,6 @@
 
 
 ### Criei este Projeto MaujorTec com o intuito de aprofundar meus conhecimentos em React. Este exercício foi tirado do livro React Aprenda Praticando, autor Maujor Samy Silva.
-</br>
 
 ### Este site está hospedado na Netlify: clique neste <a href="https://admiring-knuth-98569d.netlify.app"> link </a> para abrir o site
 
