@@ -34,9 +34,6 @@ const Home = ({ livros }) => {
           </div>
         ))
       }
-      <div className="card">
-        <p>Conteúdos da Home Page</p>
-      </div>
   </main>
   );
 };

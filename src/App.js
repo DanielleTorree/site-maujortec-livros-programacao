@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Topo from "./components/Topo";
 import Home from "./components/Home";
 import Frontend from "./components/Frontend";
@@ -27,15 +27,22 @@ const App = () => {
   return (
     <BrowserRouter>
       <Topo />
-      <Routes>
-        <Route path="/" element={<Home livros={livros}/>} />
-        <Route path="/frontend" element={<Frontend livros={livros}/>} />
-        <Route path="/programacao" element={<Programacao livros={livros}/>} />
-        <Route path="/design" element={<Design livros={livros}/>} />
-        <Route path="/catalogo" element={<Catalogo livros={livros}/>} />
-        <Route path="/livro/:livroSlug" element={<Livro livro={livros} />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Switch>
+        <Route exact path="/" render={() => <Home livros={livros}/>}/>
+        <Route exact path="/frontend" render={() => <Frontend livros={livros}/>} />
+        <Route exact path="/programacao" render={() => <Programacao livros={livros}/>} />
+        <Route exact path="/design" render={() => <Design livros={livros}/>} />
+        <Route exact path="/catalogo" render={() => <Catalogo livros={livros}/>} />
+        <Route exact path="/livro/:livroSlug" render={(props) =>{
+            const livro = livros.find(
+              livro => livro.slug === props.match.params.livroSlug);
+              console.log(props)
+              if(livro) return <Livro livro={livro}/>;
+              return <NotFound />
+          }} 
+        />
+        <Route path="*" render={() =><NotFound />} />
+      </Switch>
       <Rodape />
     </BrowserRouter>
   );
