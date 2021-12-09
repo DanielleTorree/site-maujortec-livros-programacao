@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Topo from "./components/Topo";
 import Home from "./components/Home";
@@ -10,33 +10,24 @@ import NotFound from "./components/NotFound";
 import Rodape from "./components/Rodape";
 import "./index.css";
 import Livro from "./components/Livro";
-import detalhesLivro from './api/todosOsLivros.json';
+import { connect } from 'react-redux';
 
-const App = () => {
+const App = (props) => {
 
-  const [livros, setLivros] = useState([]);
-
-  const carregarLivros = () => {
-    setLivros(detalhesLivro);
-  }
-
-  useEffect(() => {
-    carregarLivros();
-  }, [])
+  console.log(props.livro)
 
   return (
     <BrowserRouter>
       <Topo />
       <Switch>
-        <Route exact path="/" render={() => <Home livros={livros}/>}/>
-        <Route exact path="/frontend" render={() => <Frontend livros={livros}/>} />
-        <Route exact path="/programacao" render={() => <Programacao livros={livros}/>} />
-        <Route exact path="/design" render={() => <Design livros={livros}/>} />
-        <Route exact path="/catalogo" render={() => <Catalogo livros={livros}/>} />
-        <Route exact path="/livro/:livroSlug" render={(props) =>{
-            const livro = livros.find(
-              livro => livro.slug === props.match.params.livroSlug);
-              console.log(props)
+        <Route exact path="/" render={() => <Home livros={props.livro}/>}/>
+        <Route exact path="/frontend" render={() => <Frontend livros={props.livro}/>} />
+        <Route exact path="/programacao" render={() => <Programacao livros={props.livro}/>} />
+        <Route exact path="/design" render={() => <Design livros={props.livro}/>} />
+        <Route exact path="/catalogo" render={() => <Catalogo livros={props.livro}/>} />
+        <Route exact path="/livro/:livroSlug" render={({ match }) =>{
+            const livro = props.livro.find(
+              livro => livro.slug === match.params.livroSlug);
               if(livro) return <Livro livro={livro}/>;
               return <NotFound />
           }} 
@@ -48,5 +39,8 @@ const App = () => {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  livro: state.field.livro
+})
 
+export default connect(mapStateToProps, null)(App);

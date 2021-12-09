@@ -3,19 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { combineReducers, createStore } from 'redux';
+import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import reducers from './reducers/index';
 
 // servidor local: http://192.168.0.9:3000/
 
-const reducers = combineReducers({
-  
-})
-
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={createStore(reducers)}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>,
   document.getElementById('tudo')
 );
 
